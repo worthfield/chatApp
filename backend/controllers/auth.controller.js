@@ -5,6 +5,14 @@ import { generatehashedPassword, generateToken } from "../utils.js";
 const signUp = async (req, res, next) => {
   try {
     const { fullname, username, password, confirmPassword } = req.body;
+    if (
+      fullname === "" ||
+      username === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      return next(errorMessage(400, "field should not be empty"));
+    }
     if (password !== confirmPassword) {
       return next(errorMessage(400, "password doesnt match"));
     }
@@ -17,7 +25,11 @@ const signUp = async (req, res, next) => {
     if (newUser) {
       generateToken(newUser._id, res);
       await newUser.save();
-      return res.status(201).json({ message: "User created Succefully!!!" });
+      return res.status(201).json({
+        _id: newUser._id,
+        fullname: newUser.fullname,
+        username: newUser.username,
+      });
     }
   } catch (error) {
     next(error);
@@ -33,7 +45,13 @@ const signIn = async (req, res, next) => {
       return next(errorMessage(400, "Invalid Username or Password"));
     }
     generateToken(user?._id, res);
-    return res.status(200).json({ message: "User Signed In Succefully!!!" });
+    return res
+      .status(200)
+      .json({
+        _id: user._id,
+        fullname: user.fullname,
+        username: user.username,
+      });
   } catch (error) {
     next(error);
   }

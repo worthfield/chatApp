@@ -1,6 +1,25 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useAuthContext } from "../context/authContext";
+import { Link, Navigate } from "react-router-dom";
+import useSignIn from "../hooks/useSignIn";
 const Signin = () => {
+  const { authUser } = useAuthContext();
+  const { loading, signin } = useSignIn();
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signin(values);
+  };
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  if (authUser) {
+    return <Navigate to={"/"} replace />;
+  }
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -12,6 +31,7 @@ const Signin = () => {
             a id nisi.
           </p>
         </div>
+
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">
             <div className="form-control">
@@ -20,6 +40,9 @@ const Signin = () => {
               </label>
               <input
                 type="username"
+                name="username"
+                value={values.username}
+                onChange={handleChange}
                 placeholder="username"
                 className="input input-bordered"
                 required
@@ -31,18 +54,31 @@ const Signin = () => {
               </label>
               <input
                 type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
                 placeholder="password"
                 className="input input-bordered"
                 required
               />
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                <Link to="/signup" className="label-text-alt link link-hover">
+                  Create an account
+                </Link>
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn bg-warning text-white hover:text-black uppercase">Sign in</button>
+              <button
+                disabled={loading}
+                onClick={handleSubmit}
+                className={
+                  loading
+                    ? "btn bg-warning text-white hover:text-black uppercase cursor-not-allowed"
+                    : "btn bg-warning text-white hover:text-black uppercase "
+                }
+              >
+                Sign in
+              </button>
             </div>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchInput from './SearchInput'
 import Users from './Users'
+import Logout from '../container/Logout'
 
 const Sidebar = () => {
   return (
@@ -11,7 +12,7 @@ const Sidebar = () => {
         <SearchInput/>
         <div className='divider my-0'></div>
         <Users/>
-        <div className='mt-2'>Logout</div>
+        <div className='mt-2'><Logout/></div>
         
 
     </div>
