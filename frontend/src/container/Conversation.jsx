@@ -1,13 +1,20 @@
-import React,{useState} from "react";
+import React, { useEffect } from "react";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
 import Starter from "./Starter";
+import useConversation from "../store/useConversation";
 
 const Conversation = () => {
-  const [noStarterSelected, setNoStarterSelected] = useState(false);
+  const { selectedConversation, setSelectedConversation } = useConversation();
+  useEffect(() => {
+    return () => {
+      setSelectedConversation(null);
+    };
+  }, [setSelectedConversation]);
+
   return (
     <div className="hidden overflow-hidden relative md:flex flex-col w-full">
-      {noStarterSelected ? (
+      {selectedConversation ? (
         <>
           <div className="navbar bg-warning z-50">
             <div className="flex-none">
@@ -28,7 +35,9 @@ const Conversation = () => {
               </button>
             </div>
             <div className="flex-1">
-              <a className="btn btn-ghost text-xl">Anish</a>
+              <a className="btn btn-ghost text-xl">
+                {selectedConversation.username}
+              </a>
             </div>
             <div className="flex-none">
               <button className="btn btn-square btn-ghost">

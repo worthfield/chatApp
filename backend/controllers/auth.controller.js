@@ -45,13 +45,11 @@ const signIn = async (req, res, next) => {
       return next(errorMessage(400, "Invalid Username or Password"));
     }
     generateToken(user?._id, res);
-    return res
-      .status(200)
-      .json({
-        _id: user._id,
-        fullname: user.fullname,
-        username: user.username,
-      });
+    return res.status(200).json({
+      _id: user._id,
+      fullname: user.fullname,
+      username: user.username,
+    });
   } catch (error) {
     next(error);
   }

@@ -1,15 +1,16 @@
 import React from "react";
 import { CiLogout } from "react-icons/ci";
-import { signOut } from "../apis/auth";
 import { useAuthContext } from "../context/authContext";
+import useSignout from "../hooks/useSignout";
 
 const Logout = () => {
-    const {setAuthUser}= useAuthContext()
-  const handleLogout = () => {
+  const { setAuthUser } = useAuthContext();
+  const { signOut } = useSignout();
+  const handleLogout = async () => {
     try {
-      const data = signOut();
+      await signOut();
       localStorage.removeItem("user-info");
-      setAuthUser(null)
+      setAuthUser(null);
     } catch (error) {
       console.log(error);
     }

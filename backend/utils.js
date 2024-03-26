@@ -10,8 +10,10 @@ const generateToken = (userId, res) => {
   const token = jwt.sign({ userId }, config.JWTSECRET, {
     expiresIn: "15d",
   });
+  
   res.cookie("token", token, {
-    httpOnly: true,
+    httpOnly: false,
   });
+  
 };
 export { generatehashedPassword,generateToken };

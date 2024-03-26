@@ -7,15 +7,7 @@ const signup = async (userData) => {
     throw error;
   }
 };
-const signOut = async()=>{
-  try {
-    const response = await axios.post("http://localhost:8000/auth/signout");
-    return response.data
-  } catch (error) {
-    throw error
-    
-  }
-}
+
 const LoggedIn =async(userData)=>{
   try {
     const response = await axios.post("http://localhost:8000/auth/signin",userData);

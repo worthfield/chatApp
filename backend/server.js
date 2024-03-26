@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 import config from "./config/config.js";
 import dbConnection from "./database.js";
 import authRoutes from "./routes/auth.route.js";
@@ -9,7 +10,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/auth", authRoutes);
+app.use(cors({ origin: true, credentials: true }))
+app.use("/api/auth", authRoutes);
 app.use("/api/messages", msgRoutes);
 app.use("/api/users", userRoutes);
 

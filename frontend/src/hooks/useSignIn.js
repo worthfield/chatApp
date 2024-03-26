@@ -10,10 +10,7 @@ const useSignIn = () => {
     const success = validation(values);
     if (!success) return;
     try {
-      const response = await axios.post(
-        "http://localhost:8000/auth/signin",
-        values
-      );
+      const response = await axios.post("api/auth/signin", values);
       const data = response.data;
       localStorage.setItem("user-info", JSON.stringify(data));
       setAuthUser(data);

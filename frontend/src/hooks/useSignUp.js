@@ -14,7 +14,7 @@ const useSignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/signup",
+        "/api/auth/signup",
         values
       );
       const data = response.data;
