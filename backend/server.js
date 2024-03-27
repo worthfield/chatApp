@@ -3,10 +3,11 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import config from "./config/config.js";
 import dbConnection from "./database.js";
+import {app,server} from './socket/socket.js'
 import authRoutes from "./routes/auth.route.js";
 import msgRoutes from "./routes/message.route.js";
 import userRoutes from "./routes/user.route.js";
-const app = express();
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -15,7 +16,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", msgRoutes);
 app.use("/api/users", userRoutes);
 
-app.listen(config.PORT, () => {
+server.listen(config.PORT, () => {
   console.log("Server is running on port " + config.PORT);
   dbConnection();
 });
